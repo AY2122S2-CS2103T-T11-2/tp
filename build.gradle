@@ -69,4 +69,8 @@ shadowJar {
     archiveName = 'addressbook.jar'
 }
 
+checkstyle {
+    toolVersion = '8.29'
+}
+
 defaultTasks 'clean', 'test'
