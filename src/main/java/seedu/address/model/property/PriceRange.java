@@ -2,6 +2,7 @@ package seedu.address.model.property;
 
 
 import static java.util.Objects.requireNonNull;
+import seedu.address.commons.exceptions.IllegalValueException;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
