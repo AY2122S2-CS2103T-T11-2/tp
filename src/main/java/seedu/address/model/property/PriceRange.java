@@ -43,6 +43,7 @@ public class PriceRange {
         if (lower < 0) {
             throw new IllegalValueException("value should be non-negative");
         }
+
         if (lower > upper) {
             throw new IllegalValueException("lower should be lower than higher");
         }
@@ -53,11 +54,13 @@ public class PriceRange {
         if (upper < 0) {
             throw new IllegalValueException("value should be non-negative");
         }
+
         if (upper < this.lower) {
             throw new IllegalValueException("upper should be higher than lower");
         }
         this.upper = upper;
     }
+
     /**
      * update a new priceRange
      * @param lower the lower bound of the priceRange.
