@@ -41,7 +41,7 @@ public class PriceRange {
      * @param upper upper bound of range.
      * @return True if PriceRange is valid, False otherwise.
      */
-  
+    
     public static boolean isValidPriceRange(int lower, int upper) {
         return lower >= 0 && upper >= 0 && lower <= upper;  //valid as long as positive and lower is lower than upper
     }
