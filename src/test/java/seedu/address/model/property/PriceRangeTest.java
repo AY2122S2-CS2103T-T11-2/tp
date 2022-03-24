@@ -3,7 +3,6 @@ package seedu.address.model.property;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +12,26 @@ class PriceRangeTest {
 
     private PriceRange editablePriceRange = new PriceRange(10, 20);
 
-    PriceRangeTest() throws IllegalValueException {
-        assertThrows(IllegalValueException.class, () -> new PriceRange(20, 10));
-        assertThrows(IllegalValueException.class, () -> new PriceRange(-10, 50)); //negative values
-        assertThrows(IllegalValueException.class, () -> new PriceRange(-100, -50)); //negative values
+
+    @Test
+    public void isValidPriceRangeTest() {
+        //lower higher than upper.
+        assertFalse(PriceRange.isValidPriceRange(20, 10));
+
+        //negative values.
+        assertFalse(PriceRange.isValidPriceRange(-10, 50));
+        assertFalse(PriceRange.isValidPriceRange(-100, -50));
+
+        //inclusivity is fine.
+        assertTrue(PriceRange.isValidPriceRange(10, 10)); //lower can equal upper.
+
+        //positive test cases.
+        assertTrue(PriceRange.isValidPriceRange(0, 100));
+        assertTrue(PriceRange.isValidPriceRange(1, 2));
     }
 
     @Test
-    public void priceRangeToStringTest() throws IllegalValueException {
+    public void priceRangeToStringTest() {
         PriceRange pr1 = new PriceRange(0, 100);
         PriceRange pr2 = new PriceRange(50, 100);
         assertEquals("[0,100]", pr1.toString());
@@ -28,7 +39,7 @@ class PriceRangeTest {
     }
 
     @Test
-    public void getLowerTest() throws IllegalValueException {
+    public void getLowerTest() {
         PriceRange pr1 = new PriceRange(0, 100);
         PriceRange pr2 = new PriceRange(50, 100);
         assertEquals(0, pr1.getLower());
@@ -36,45 +47,11 @@ class PriceRangeTest {
     }
 
     @Test
-    public void getUpperTest() throws IllegalValueException {
+    public void getUpperTest() {
         PriceRange pr1 = new PriceRange(0, 100);
         PriceRange pr2 = new PriceRange(50, 100);
         assertEquals(100, pr1.getUpper());
         assertEquals(100, pr2.getUpper());
-    }
-
-    @Test
-    public void setLowerTest() throws IllegalValueException {
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.setLower(-1)); //negative
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.setLower(100)); //more than upper
-
-        editablePriceRange.setLower(5);
-        assertEquals(5, editablePriceRange.getLower());
-    }
-
-    @Test
-    public void setUpperTest() throws IllegalValueException {
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.setUpper(-1)); //negative
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.setUpper(0)); //lower than lower
-
-        editablePriceRange.setUpper(2000);
-        assertEquals(2000, editablePriceRange.getUpper());
-    }
-
-    @Test
-    public void updatePriceTest() throws IllegalValueException {
-        PriceRange pr = new PriceRange(0, 100);
-
-        //lower is not lower than upper
-        assertThrows(IllegalValueException.class, () -> pr.updatePrice(100, 40));
-
-        //value is negative
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.updatePrice(-1, 40));
-        assertThrows(IllegalValueException.class, () -> editablePriceRange.updatePrice(-100, -50));
-
-        editablePriceRange.updatePrice(20, 50);
-        assertEquals(20, editablePriceRange.getLower());
-        assertEquals(50, editablePriceRange.getUpper());
     }
 
     @Test

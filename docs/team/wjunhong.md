@@ -38,7 +38,7 @@ Given below are my contributions to the project.
     * Set up milestone and issues for [#v1.3](https://github.com/AY2122S2-CS2103T-T11-2/tp/milestone/3)
 
 * **Review contributions**:
-  * Made review for multiple Pull Requests such as 
-    * [#34](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/34) where I commented that there were some problems with import styling 
+  * Made review for multiple Pull Requests such as
+    * [#34](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/34) where I commented that there were some problems with import styling
     * [#48](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/48) where I read through how sort command works and gave my approval
     * [#87](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/87) where I commented on the missing javadoc descriptions

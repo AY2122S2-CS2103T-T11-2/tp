@@ -16,8 +16,6 @@ class HouseTest {
     public void testHouseEquals() {
         assertFalse(h1.equals(h2));
         assertFalse(h1.equals(h3));
-
-        System.out.println(h4.getLocation());
         assertTrue(h1.equals(h4));
     }
 }

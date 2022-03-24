@@ -32,8 +32,10 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private ClientListPanel clientListPanel;
+    private SellerListPanel sellerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ListSelectionTab listSelectionTab;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,6 +51,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane tabHolder;
+
+    @FXML
+    private StackPane sellerListPanelPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -113,6 +121,9 @@ public class MainWindow extends UiPart<Stage> {
         clientListPanel = new ClientListPanel(logic.getFilteredclientList());
         clientListPanelPlaceholder.getChildren().add(clientListPanel.getRoot());
 
+        sellerListPanel = new SellerListPanel(logic.getFilteredSellerList());
+        sellerListPanelPlaceholder.getChildren().add(sellerListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -121,6 +132,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        listSelectionTab = new ListSelectionTab();
+        tabHolder.getChildren().add(listSelectionTab.getRoot());
     }
 
     /**
@@ -194,3 +208,4 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 }
+

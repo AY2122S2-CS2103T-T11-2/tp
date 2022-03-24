@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.buyer.Buyer;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
+import seedu.address.model.seller.Seller;
 
 /**
  * Wraps all data at the address-book level
@@ -97,6 +98,28 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addBuyer(Buyer buyer) {
         clients.add(buyer);
+    }
+
+    //======== AddSeller =========//
+
+    /**
+     * Checks if the client list contains the seller.
+     *
+     * @param seller The seller.
+     * @return Whether seller is already in list.
+     */
+    public boolean hasSeller(Seller seller) {
+        requireNonNull(seller);
+        return clients.contains(seller);
+    }
+
+    /**
+     * Adds a new seller to the client list.
+     *
+     * @param seller The seller.
+     */
+    public void addSeller(Seller seller) {
+        clients.add(seller);
     }
 
     /**

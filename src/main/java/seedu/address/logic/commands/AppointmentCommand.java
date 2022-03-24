@@ -17,12 +17,12 @@ import seedu.address.model.client.Client;
 public class AppointmentCommand extends Command {
     public static final String COMMAND_WORD = "appointment";
     public static final String MESSAGE_EMPTY_INPUT_DATE = "Please enter the date following the client index"
-            + "in the form of 'yyyy-MM-dd-HH-mm'";
+            + " in the form of 'yyyy-MM-dd-HH-mm'";
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "You have made an appointment with client: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "You have removed an appointment with client: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + "The appointment time should be specified to minutes"
-            + "with the format 'yyyy-MM-dd-HH-mm'"
+            + ": The appointment time should be specified to minutes"
+            + "with the format 'yyyy-MM-dd-HH-mm'\n"
             + "Example:  " + COMMAND_WORD + " 1 "
             + "time/ 2022-05-04-14-00";
 
@@ -51,8 +51,7 @@ public class AppointmentCommand extends Command {
 
         Client clientToEdit = lastShownList.get(index.getZeroBased());
         Client editedClient = new Client(
-                clientToEdit.getName(), clientToEdit.getDescription(), clientToEdit.getPhone(), clientToEdit.getEmail(),
-                clientToEdit.getAddress(), clientToEdit.getRemark(), appointment, clientToEdit.getTags()
+                clientToEdit.getName(), clientToEdit.getPhone(), appointment, clientToEdit.getTags()
         );
 
         model.setClient(clientToEdit, editedClient);

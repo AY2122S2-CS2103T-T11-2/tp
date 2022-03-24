@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.buyer.Buyer;
 import seedu.address.model.client.Client;
+import seedu.address.model.seller.Seller;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -21,25 +22,30 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final SellerAddressBook sellerAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
-
+    private final FilteredList<Seller> filteredSellers;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlyAddressBook addressBook,
+                        ReadOnlyUserPrefs userPrefs, ReadOnlySellerAddressBook sellerAddressBook) {
+        requireAllNonNull(addressBook, userPrefs, sellerAddressBook);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + " and seller address book: " + sellerAddressBook);
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.sellerAddressBook = new SellerAddressBook(sellerAddressBook);
         filteredClients = new FilteredList<>(this.addressBook.getclientList());
+        filteredSellers = new FilteredList<>(this.sellerAddressBook.getSellerList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new SellerAddressBook());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -75,6 +81,17 @@ public class ModelManager implements Model {
     public void setAddressBookFilePath(Path addressBookFilePath) {
         requireNonNull(addressBookFilePath);
         userPrefs.setAddressBookFilePath(addressBookFilePath);
+    }
+
+    @Override
+    public Path getSellerAddressBookFilePath() {
+        return userPrefs.getSellerAddressBookFilePath();
+    }
+
+    @Override
+    public void setSellerAddressBookFilePath(Path sellerAddressBookFilePath) {
+        requireNonNull(sellerAddressBookFilePath);
+        userPrefs.setSellerAddressBookFilePath(sellerAddressBookFilePath);
     }
 
     //=========== AddressBook ================================================================================
@@ -126,6 +143,51 @@ public class ModelManager implements Model {
         return addressBook.hasBuyer(buyer);
     }
 
+    //========== For addseller============//
+    @Override
+    public void addSeller(Seller seller) {
+        sellerAddressBook.addSeller(seller);
+        updateFilteredSellerList(PREDICATE_SHOW_ALL_SELLERS);
+    }
+
+    @Override
+    public boolean hasSeller(Seller seller) {
+        requireNonNull(seller);
+        return sellerAddressBook.hasSeller(seller);
+    }
+
+    @Override
+    public void deleteSeller(Seller target) {
+        sellerAddressBook.removeSeller(target);
+    }
+
+    @Override
+    public void setSeller(Seller target, Seller editedSeller) {
+        requireAllNonNull(target, editedSeller);
+        sellerAddressBook.setSeller(target, editedSeller);
+    }
+
+    @Override
+    public ObservableList<Seller> getFilteredSellerList() {
+        return filteredSellers;
+    }
+
+    @Override
+    public void updateFilteredSellerList(Predicate<Seller> predicate) {
+        requireNonNull(predicate);
+        filteredSellers.setPredicate(predicate);
+    }
+
+    @Override
+    public void setSellerAddressBook(ReadOnlySellerAddressBook sellerAddressBook) {
+        this.sellerAddressBook.resetData(sellerAddressBook);
+    }
+
+    @Override
+    public ReadOnlySellerAddressBook getSellerAddressBook() {
+        return sellerAddressBook;
+    }
+
     //=========== Filtered client List Accessors =============================================================
 
     /**
@@ -161,6 +223,7 @@ public class ModelManager implements Model {
         }
 
         // state check
+        // add buyer and seller later
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && userPrefs.equals(other.userPrefs)

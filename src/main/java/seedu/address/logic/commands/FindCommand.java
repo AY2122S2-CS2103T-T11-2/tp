@@ -6,9 +6,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.client.AddressContainsKeywordsPredicate;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.EmailContainsKeywordsPredicate;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
 import seedu.address.model.client.PhoneContainsKeywordsPredicate;
 
@@ -36,15 +34,6 @@ public class FindCommand extends Command {
     public FindCommand(PhoneContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
-
-    public FindCommand(AddressContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
-    public FindCommand(EmailContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
 
     @Override
     public CommandResult execute(Model model) {

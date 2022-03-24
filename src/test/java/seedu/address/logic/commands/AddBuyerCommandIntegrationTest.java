@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.SellerAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.buyer.Buyer;
 import seedu.address.testutil.BuyerBuilder;
@@ -21,14 +22,14 @@ public class AddBuyerCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new SellerAddressBook());
     }
 
     @Test
     public void execute_newBuyer_success() {
         Buyer validBuyer = new BuyerBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new SellerAddressBook());
         expectedModel.addClient(validBuyer);
 
         assertCommandSuccess(new AddBuyerCommand(validBuyer), model,

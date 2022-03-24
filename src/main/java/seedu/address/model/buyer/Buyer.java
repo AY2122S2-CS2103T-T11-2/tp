@@ -3,14 +3,10 @@ package seedu.address.model.buyer;
 import java.util.List;
 import java.util.Set;
 
-import seedu.address.model.client.Address;
 import seedu.address.model.client.Appointment;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.Description;
-import seedu.address.model.client.Email;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
-import seedu.address.model.client.Remark;
 import seedu.address.model.property.PropertyToBuy;
 import seedu.address.model.tag.Tag;
 
@@ -26,9 +22,9 @@ public class Buyer extends Client {
     /**
      * Constructor of Buyer class.
      */
-    public Buyer(Name name, Description description, Phone phone, Email email, Address address, Remark remark,
-                 Appointment appointment, Set<Tag> tags, List<PropertyToBuy> properties) {
-        super(name, description, phone, email, address, remark, appointment, tags);
+    public Buyer(Name name, Phone phone, Appointment appointment, Set<Tag> tags,
+                 List<PropertyToBuy> properties) {
+        super(name, phone, appointment, tags);
         this.propertiesToBuy = properties;
     }
 
@@ -53,11 +49,7 @@ public class Buyer extends Client {
 
         Buyer otherBuyer = (Buyer) other;
         return otherBuyer.getName().equals(getName())
-                && otherBuyer.getDescription().equals(getDescription())
                 && otherBuyer.getPhone().equals(getPhone())
-                && otherBuyer.getEmail().equals(getEmail())
-                && otherBuyer.getAddress().equals(getAddress())
-                && otherBuyer.getRemark().equals(getRemark())
                 && otherBuyer.getTags().equals(getTags())
                 && otherBuyer.hasSameProperties(this);
     }

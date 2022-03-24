@@ -108,11 +108,7 @@ Shows a list of all clients in the contact list.
 
 Format: `list`
 
-### Editing a client : `edit`
-
-Edits the fields of a client in the contact list.
-
-### Sort all persons : `sort`
+### Sort all clients : `sort`
 
 Sort all the person according to the orders specified
 
@@ -133,7 +129,7 @@ Examples:
 
 
 
-### Editing a person : `edit`
+### Editing a client : `edit`
 
 Edits an existing client in the contact list.
 

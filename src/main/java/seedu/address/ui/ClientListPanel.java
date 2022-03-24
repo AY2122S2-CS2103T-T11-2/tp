@@ -14,7 +14,7 @@ import seedu.address.model.client.Client;
  * Panel containing the list of clients.
  */
 public class ClientListPanel extends UiPart<Region> {
-    private static final String FXML = "clientListPanel.fxml";
+    private static final String FXML = "ClientListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ClientListPanel.class);
 
     @FXML

@@ -5,42 +5,44 @@ title: Janald's Project Portfolio Page
 
 ### Project: AgenSee
 
-AgentSee is a **desktop app for managing house selling clients and for quick filtering for a specific type of house to recommend to buyers, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AgentSee can get your contact management tasks done faster than traditional GUI apps.
+AgentSee is a desktop application for property agents to efficiently manage their client information.
 
 Given below are my contributions to the project.
 
-* **New Feature**: Added the ability to ..
-    * What it does: allows the user to us
-    * Justification: This feature improves th
-    * Highlights: This enhancement affects existquh
-    * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
-
-* **New Feature**: Added a mmands.. using up/down keys.
-
 * **Code contributed**: [RepoSense link]()
+  * `PropertyToBuy` class
+  * `PropertyToSell` class
+  * `PriceRange` class
+  * `Location` class
+  * `PriceRangeTest` class
+  * `PropertyToBuyTest` & `PropertyToSell` class
+  * Edited files to conform to checkstyle and add JavaDocs
 
+* **New Feature**: Added the match feature
+  * What it does: allows matching of price range of buyers and sellers from the PropertyToBuy and PropertyToSell class.
+  * Justification: This feature allows buyers to match with sellers to find a potential property they want to buy, based on their demand such as houseType and willing priceRange.
+  
 * **Project management**:
-    * Managed releases `v1.0` - `v1.rc` (X releases) on GitHub
+    * Managed releases `v1.0` - `v1.2` (2 releases) on GitHub
 
 * **Enhancements to existing features**:
-    * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-    * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+    * Wrote additional tests for existing features to increase coverage
 
 * **Documentation**:
     * User Guide:
-        * Added documentation for the features `delete` and `find` [\#72]()
-        * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
+        * Contributed to the skeleton of the user guide by gaining inspiration from the AB3 User Guide.
+        * Quick Start of the User Guide, including adding the UI prototype screenshot.
+        * Removed the unnecessary documentation from the AB3 code base.
     * Developer Guide:
-        * Added implementation details of the `delete` feature.
+        * Added the Glossary section to clarify ambiguous terms.
+        * Added the Non-functional requirements of our project.
+        * Removed the unnecessary documentation from the AB3 code base.
+        * Many minor adjustments to sentence structures, refactoring keywords, and replacing images.
 
-* **Community**:
-    * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-    * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-    * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-    * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]())
+* **Contributions to team tasks**:
+  * Plan the architecture of our project, by drawing visually and screen-sharing.
+  * Summarize the work distribution and agenda of each meeting.
+  * Set up issues on GitHub](https://github.com/AY2122S2-CS2103T-T11-2/tp/issues)
 
-* **Tools**:
-    * Integrated a third party library (Natty) to the project ([\#42]())
-    * Integrated a new Github plugin (CircleCI) to the team repo
-
-* _{you can add/remove categories in the list above}_
+* **Review contributions**:
+  * Made review for multiple Pull Requests, and resolved a Pull R

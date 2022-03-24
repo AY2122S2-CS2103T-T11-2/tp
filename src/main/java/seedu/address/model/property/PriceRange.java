@@ -1,6 +1,8 @@
 package seedu.address.model.property;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Price range of a property, which includes the lower and upper bound that a buyer is willing to buy at or a seller
@@ -8,6 +10,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
  *
  */
 public class PriceRange {
+
+    public static final String MESSAGE_CONSTRAINTS =
+        "PriceRange: lower should be lower than upper(inclusive), and all values should be non-negative";
 
     /**
      * The lower and upper bounds are inclusive, meaning the lower bound includes the lower and higher value itself,
@@ -21,14 +26,24 @@ public class PriceRange {
      * @param lower lower bound of the PriceRange, inclusive.
      * @param upper upper bound of the PriceRange, inclusive.
      */
-    public PriceRange(int lower, int upper) throws IllegalValueException {
-        if (lower > upper || lower < 0 || upper < 0) {
-            // lower must be lower than upper, and the values should all be non-negative.
-            throw new IllegalValueException("lower should be lower than upper(inclusive),"
-                      + " and all values should be non-negative");
-        }
+    public PriceRange(int lower, int upper) {
+        requireNonNull(lower);
+        requireNonNull(upper);
+        checkArgument(isValidPriceRange(lower, upper), MESSAGE_CONSTRAINTS);
+
         this.lower = lower;
         this.upper = upper;
+    }
+
+    /**
+     * Checks if a Price Range, given a lower and upper bound, is valid.
+     * @param lower lower bound of range.
+     * @param upper upper bound of range.
+     * @return True if PriceRange is valid, False otherwise.
+     */
+  
+    public static boolean isValidPriceRange(int lower, int upper) {
+        return lower >= 0 && upper >= 0 && lower <= upper;  //valid as long as positive and lower is lower than upper
     }
 
     public int getLower() {
@@ -54,7 +69,6 @@ public class PriceRange {
         if (upper < 0) {
             throw new IllegalValueException("value should be non-negative");
         }
-
         if (upper < this.lower) {
             throw new IllegalValueException("upper should be higher than lower");
         }

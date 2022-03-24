@@ -1,12 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 
@@ -21,14 +17,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.client.Address;
 import seedu.address.model.client.Appointment;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.Description;
-import seedu.address.model.client.Email;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
-import seedu.address.model.client.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,14 +35,10 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_PHONE + "91234567 ";
 
     public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -100,16 +88,11 @@ public class EditCommand extends Command {
         assert clientToEdit != null;
 
         Name updatedName = editclientDescriptor.getName().orElse(clientToEdit.getName());
-        Description updatedDescription = editclientDescriptor.getDescription().orElse(clientToEdit.getDescription());
         Phone updatedPhone = editclientDescriptor.getPhone().orElse(clientToEdit.getPhone());
-        Email updatedEmail = editclientDescriptor.getEmail().orElse(clientToEdit.getEmail());
-        Address updatedAddress = editclientDescriptor.getAddress().orElse(clientToEdit.getAddress());
-        Remark updatedRemark = editclientDescriptor.getRemark().orElse(clientToEdit.getRemark());
         Set<Tag> updatedTags = editclientDescriptor.getTags().orElse(clientToEdit.getTags());
         Appointment updatedAppointment = editclientDescriptor.getAppointment().orElse(clientToEdit.getAppointment());
 
-        return new Client(updatedName, updatedDescription, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
-                updatedAppointment, updatedTags);
+        return new Client(updatedName, updatedPhone, updatedAppointment, updatedTags);
     }
 
     @Override
@@ -136,11 +119,7 @@ public class EditCommand extends Command {
      */
     public static class EditclientDescriptor {
         private Name name;
-        private Description description;
         private Phone phone;
-        private Email email;
-        private Address address;
-        private Remark remark;
         private Set<Tag> tags;
         private Appointment appointment;
 
@@ -152,11 +131,7 @@ public class EditCommand extends Command {
          */
         public EditclientDescriptor(EditclientDescriptor toCopy) {
             setName(toCopy.name);
-            setDescription(toCopy.description);
             setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setRemark(toCopy.remark);
             setTags(toCopy.tags);
         }
 
@@ -165,7 +140,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, description, phone, email, address, remark, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, tags);
         }
 
         public void setName(Name name) {
@@ -176,14 +151,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setDescription(Description description) {
-            this.description = description;
-        }
-
-        public Optional<Description> getDescription() {
-            return Optional.ofNullable(description);
-        }
-
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
@@ -192,36 +159,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
-        }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
         public void setAppointment(Appointment appointment) {
             this.appointment = appointment;
         }
 
         public Optional<Appointment> getAppointment() {
             return Optional.ofNullable(appointment);
-        }
-
-        public void setRemark(Remark remark) {
-            this.remark = remark;
-        }
-
-        public Optional<Remark> getRemark() {
-            return Optional.ofNullable(remark);
         }
 
         /**
@@ -257,11 +200,7 @@ public class EditCommand extends Command {
             EditclientDescriptor e = (EditclientDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getDescription().equals(e.getDescription())
                     && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getRemark().equals(e.getRemark())
                     && getTags().equals(e.getTags());
         }
     }
