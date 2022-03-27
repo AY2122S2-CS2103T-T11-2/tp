@@ -1,0 +1,78 @@
+@startuml
+!include style.puml
+
+!define LOGIC_COLOR #3333C4
+!define LOGIC_COLOR_T1 #7777DB
+!define LOGIC_COLOR_T2 #5252CE
+!define LOGIC_COLOR_T3 #1616B0
+!define LOGIC_COLOR_T4 #101086
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":EditBuyerCommandParser" as EditBuyerCommandParser LOGIC_COLOR
+participant "EditBuyerCommand" as EditBuyerCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T2
+participant ":Model" as Model MODEL_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR_T3
+
+
+[-> LogicManager : execute("addbuyer 1 n/chua")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand
+activate AddressBookParser
+
+create EditBuyerCommandParser
+AddressBookParser -> EditBuyerCommandParser
+activate EditBuyerCommandParser
+
+EditBuyerCommandParser --> AddressBookParser:
+deactivate EditBuyerCommandParser
+
+AddressBookParser -> EditBuyerCommandParser : parse("addbuyer 1 n/chua")
+activate EditBuyerCommandParser
+
+create EditBuyerCommand
+EditBuyerCommandParser -> EditBuyerCommand :
+activate EditBuyerCommand
+
+EditBuyerCommand --> EditBuyerCommandParser
+deactivate EditBuyerCommand
+
+EditBuyerCommandParser --> AddressBookParser : :CommandResult
+deactivate EditBuyerCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+EditBuyerCommandParser -[hidden]-> AddressBookParser
+destroy EditBuyerCommandParser
+
+AddressBookParser --> LogicManager ::CommandResult
+deactivate AddressBookParser
+
+LogicManager -> EditBuyerCommand : CommandResult::execute
+activate EditBuyerCommand
+
+EditBuyerCommand -> Model : setBuyer()
+activate Model
+
+Model --> EditBuyerCommand
+deactivate Model
+
+EditBuyerCommand --> LogicManager : CommandResult
+deactivate EditBuyerCommand
+
+LogicManager --> Storage : saveBuyerAddressBook()
+activate Storage
+
+Storage --> LogicManager
+deactivate Storage
+
+[<--LogicManager : CommandResult
+deactivate LogicManager
+@enduml

@@ -13,6 +13,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.client.Appointment;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
+import seedu.address.model.property.NullPropertyToSell;
+import seedu.address.model.property.PropertyToSell;
 import seedu.address.model.seller.Seller;
 import seedu.address.model.tag.Tag;
 
@@ -39,7 +41,9 @@ public class AddSellerCommandParser implements Parser<AddSellerCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Appointment appointment = new Appointment("");
-        Seller seller = new Seller(name, phone, appointment, tagList);
+        //Todo: improve in future (for add command enhancement)
+        PropertyToSell propertyToSell = NullPropertyToSell.getNullPropertyToSell();
+        Seller seller = new Seller(name, phone, appointment, tagList, propertyToSell);
 
         return new AddSellerCommand(seller);
     }

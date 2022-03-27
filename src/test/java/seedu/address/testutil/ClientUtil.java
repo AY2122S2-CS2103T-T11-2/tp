@@ -40,10 +40,10 @@ public class ClientUtil {
      */
     public static String getPropertyToBuyCommand(Buyer buyer) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_LOCATION + buyer.getDesiredProperty().getHouse().getLocation().toString() + " ");
-        sb.append(PREFIX_HOUSE_TYPE + buyer.getDesiredProperty().getHouse().getHouseTypeToString() + " ");
+        sb.append(PREFIX_LOCATION + buyer.getPropertyToBuy().getHouse().getLocation().toString() + " ");
+        sb.append(PREFIX_HOUSE_TYPE + buyer.getPropertyToBuy().getHouse().getHouseTypeToString() + " ");
         sb.append(PREFIX_PRICE_RANGE
-                + buyer.getDesiredProperty().getPriceRange().toString().split("]")[0].substring(1) + " ");
+                + buyer.getPropertyToBuy().getPriceRange().toString().split("]")[0].substring(1) + " ");
         return sb.toString();
     }
 

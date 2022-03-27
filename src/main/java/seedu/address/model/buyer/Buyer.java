@@ -16,15 +16,15 @@ import seedu.address.model.tag.Tag;
 public class Buyer extends Client {
 
     // Data fields
-    private final PropertyToBuy desiredProperty;
+    private final PropertyToBuy propertyToBuy;
 
     /**
      * Constructor of Buyer class.
      */
     public Buyer(Name name, Phone phone, Appointment appointment, Set<Tag> tags,
-                 PropertyToBuy desiredProperty) {
+                 PropertyToBuy propertyToBuy) {
         super(name, phone, appointment, tags);
-        this.desiredProperty = desiredProperty;
+        this.propertyToBuy = propertyToBuy;
     }
 
 
@@ -33,8 +33,8 @@ public class Buyer extends Client {
      *
      * @return PropertyToBuy.
      */
-    public PropertyToBuy getDesiredProperty() {
-        return desiredProperty;
+    public PropertyToBuy getPropertyToBuy() {
+        return propertyToBuy;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Buyer extends Client {
         return otherBuyer.getName().equals(getName())
                 && otherBuyer.getPhone().equals(getPhone())
                 && otherBuyer.getTags().equals(getTags())
-                && otherBuyer.getDesiredProperty().equals(getDesiredProperty());
+                && otherBuyer.getPropertyToBuy().equals(getPropertyToBuy());
     }
 
 }

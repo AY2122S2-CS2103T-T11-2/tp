@@ -121,17 +121,30 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `client` objects (which are contained in a `UniqueclientList` object).
-* stores the currently 'selected' `client` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+<div markdown="span" class="alert alert-info">:information_source: Note that the usage of the term `CLIENT` is abstract, and represents each Client entity: Buyer, Seller
+</div>  
+
+* stores the address book data i.e., all `CLIENT` objects (which are contained in a `UniqueCLIENTList` object).
+* stores the currently 'selected' `CLIENT` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `client` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `client` needing their own `Tag` objects.<br>
+Let's take a look at the internal structure of the `CLIENT` entity:
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+<img src="images/ClientClassDiagram.png" width="450" />
 
-</div>
+* all abstract `CLIENT` objects (Buyer or Seller) have a name and phone number.
+* `Buyer` has `PropertyToBuy` while `Seller` has `PropertyToSell`.
 
+Now, what PropertyToBuy and PropertyToSell classes encapsulate:
+
+<img src="images/PropertyClassDiagram.png" width="450" />
+
+
+<div markdown="span" class="alert alert-info">:information_source: Note that We have decided to separate these 2 fields and NOT make them inherit an abstract `Property` class.
+ This is because sellers know the exact property (and address of the property) that they are selling.
+ We can hence extend the code base more flexibly in the future if we remove some fields from PropertyToBuy or add more fields to PropertyToSell.
+</div>  
 
 ### Storage component
 
@@ -154,7 +167,74 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### `addbuyer` feature
+
+### Match feature
+
+#### Implementation
+
+We are currently implementing a Match feature. In implements the following operation:
+
+* `match` —  Matches a Buyer to a List of Seller.
+
+Format: `match buyer_index`
+* The fields are:
+    * `buyer_index` - index of the Buyer that the user is trying to match with Sellers.
+    
+Example: `match 2`
+    
+Result:
+* The list of sellers that match the buyer's demands are displayed in the UI.
+
+#### How match is going to be implemented
+
+* The match command will match a Buyer with Sellers whose `PropertyToSell` matches the demands of the `PropertyToBuy` of the buyer.
+
+* How does match filter the sellers (How does `PropertyToBuy` match with `PropertyToSell`:
+
+    -  If there exists a **price** where a buyer is willing to buy and seller is willing to sell for in their respective `buyRange` and `sellRange`, **AND**
+    - Their House are equal (i.e, the Location and HouseType of the house matches)
+
+* An example:
+    - buyer's `PropertyToBuy`(after `edit` or `add`) has `House`, and buyer is currently at *index 2* of UniqueBuyerList.
+        - `Name`: *Janald*
+    
+        - PropertyToBuy: 
+            - `HouseType`: `BUNGALOW`,
+            - `Location`: `Serangoon` and 
+            - `PriceRange`:(50 000, 100 000) in dollars
+
+    - a certain seller has
+        - `Name`: *Junhong*
+        - `ProperyToSell`: 
+            - `House` with `HouseType`: `BUNGALOW` and `Location`: `Serangoon` as well
+            - His `PriceRange` that he is willing to sell the property for is (99 999, 200 000)
+      
+    - In this case, the PropertyToBuy and PropertyToSell can match(same House, and 99 999 - 100 000 dollars is a matching price)
+    - `match 2` will display the list of sellers that match the buyer *Janald*. As a result, *Junhong* will be one of the sellers displayed.
+    
+#### Why match should be implemented
+
+* Our AgentSee application helps housing agents to keep track of their clients in an efficient manner.
+
+* Since there are so many buyers and sellers to keep track of, it would be useful for agents to automate the matching of buyers to sellers.
+* The match feature will help agents filter and find a matching property that a buyer wants to buy and a seller wants to sell, which is of great convenience for agents to liase buyers with sellers.
+* What buyers look for when buying a Property is its `Location`, `HouseType`, and they have a `PriceRange` they are willing to pay for. Therefore, we are implementing `match` such that these conditions are met.
+
+#### \[Proposed\]  Alternatives considered
+
+* We can match buyers with other less strict conditions as well.
+* For example, we can match buyers and sellers with only match:
+    - HouseTypes only (example: `COLONIAL`, Since buyers may be looking only for a specific HouseType, regardless of Location)
+    - Location only (example: `Toa Payoh`, Since some buyers may like to buy a Property at a specific area, regardless of other conditions)
+    - PriceRange only (Since buyers may just be looking for properties in their buy range)
+
+* As such, we have a more flexible match feature which would be ideal for agents to match based on their dynamic client demands.
+
+### \[Proposed\] Bargain/Negotiate feature
+
+* An additional feature that could be implemented in the future.
+
+### Add Buyer feature
 The `addbuyer` command mechanism uses a similar interactions as shown in the [Logic Component](#logic-component). Mainly, it can be broken down into these steps:
 
 **Step 1:**
@@ -203,7 +283,129 @@ The following Sequence Diagrams summarizes the various steps involved:
 
 ![AddBuyerSequenceDiagram](images/AddBuyerSequenceDiagram.png)
 
-For full details on implementation, check out this [link](https://github.com/AY2122S2-CS2103T-T11-2/tp/tree/master/src/main/java/seedu/address/logic)
+
+
+### 2. `editbuyer` / `For full details on implementation, check out this [link](https://github.com/AY2122S2-CS2103T-T11-2/tp/tree/master/src/main/java/seedu/address/logic)
+editseller` feature
+The `editbuyer` / `editseller` command mechanism uses a similar interactions as shown in the [Logic Component](). Mainly, it can be broken down into these steps:
+#### Syntax:
+```editbuyer [index] n/... p/... t/... prop/ h/... l/... pr/...```
+
+```editseller [index] n/... p/... t/... prop/ h/... l/... pr/...```
+
+Note: All the prefix (like n/, p/, ...) are <b>optional</b>, you could omit any of them but at least one prefix should be provided, and the <b>order</b> of prefix does not matter.
+
+Below are some detailed steps while executing `editbuyer` / `editseller` command: 
+
+**We use ```editbuyer``` command as an example, the other command's flow are similar to this command as well.**
+
+---
+
+**Step 1:**
+
+The user types input E.g. `editbuyer 1 n/Chua` into the `CommandBox`
+
+**Step 2:**
+
+Once the user hit Enter,  the  `LogicManager` calls `execute` that takes in everything user typed. 
+Then, `AddressBookParser` will investigate the user's input. It will takes the first keyword: `editbuyer` and 
+call the corresponding `EditBuyerCommandParser::parse` by providing the **arguments** (anything after than first word) from user input
+
+**Step 3:**
+
+`EditBuyerCommandParser` parse the argument provided and check the validity of the arguments. If any argument provided 
+is not valid, an error will be shown the command won't be executed.
+
+In our example, `1 n/Chua` was provided, the index and at least one require prefix are given, so it is a valid argument.
+
+**Step 4:**
+
+Now the `AddressBookParser` returns `EditBuyerCommand` as ``CommandResult``, the `LogicManager` then calls 
+`CommandResult::execute`.
+
+**Step 5:**
+
+Now the `EditBuyerCommand` will execute and do the work, that is updating the corresponding information from the given
+index. A `CommandResult` containing the successful execution result is returned.
+
+**Note:** The validity of the index will be check at this time, if the index is out of bound, the error will be shown 
+and the edit command will not be executed.
+
+**Step 6:**
+
+`LogicManager` component will then update the storage with the edited `Model` through the 
+`Storage#saveBuyerAddressBook()` method.
+
+**Step 7:**
+
+Finally, the `CommandResult` is returned to be displayed by `UI` component (Refer to [Architecture](#architecture))
+
+The Sequence Diagrams below summarizes the various steps involved:
+
+
+![EditBuyerCommandDiagram](diagrams/EditBuyerCommandDiagram.png)
+
+---
+
+### Add property for buyer feature
+The `add-ptb` command uses a similar mechanism as the `addbuyer` command mentioned [above](#add-buyer-feature), with the following differences:
+
+1. An index needs to be specified along with the necessary fields
+    E.g. `add-ptb 1 h/condo l/Serangoon pr/400000,900000`
+2. The Parser (`AddPropertyToBuyCommandParser`) checks if the position parsed in is valid (Greater than equal to 0 and Smaller than or equal to the size of the Buyer list).
+3. The updated buyer remains in the same position as before, while a new buyer is added to the end of the list
+
+**\[Proposed\]** Alternatives considered:
+
+- Given the time, the add property to buy feature can be integrated with the `addbuyer` command to allow users to add properties with the buyer,
+instead of doing it in 2 commands. 
+  - Pros:
+    - More flexibility for experienced users
+  - Cons:
+    - More code to implement and test
+- Allow for certain fields to be **optional** if a buyer is yet to give the user the information, but they still wish to add a property first
+  - Pros:
+    - More flexible design
+  - Cons:
+    - Hard to implement
+    - Error prone
+
+### \[Proposed\] Add Property to sell feature
+The `add-pts` command is very similar to the above command with only slight differences:
+1. An additional field is required: `address` of the seller's house
+
+
+### `sort` feature
+The `sort` command mechanism can be broken down into the following steps:
+
+**Step 1:**
+The user types input E.g.  `sort` into the `CommandBox` (See [UI component](#ui-component) for more info on `CommandBox`)
+
+**Step 2:**
+The `execute(input)` method of `LogicManager`, a subclass of the Logic component, is called with the given input.
+
+**Step 3:**
+The `sortFilteredClientList()` method of `model` is being called
+
+**Step 4:**
+The `Addressbook.sortPersons() ` method is being called.
+
+**Step 5:** 
+The `UniqueClientList.sortPersons() ` method is being called.
+
+**Step 6:**
+`UniqueClientList`'s `internalList` is being modified permanently by the order of their names alphabetically.
+
+The following Sequence Diagrams summarizes the various steps involved:
+
+`To be added later`
+
+**Pros:**
+It alters the internal list completely, so that the app 'saves' users last sorting option.
+
+**Cons:**
+Some people might not want the sorted result to be saved. 
+Currently we are exploring other options to sort the list besides modifying the structure of internal list directly.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -275,15 +477,56 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the client being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the client being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
+
+### \[Proposed\] Clear buyer list/Clear seller list
+
+#### Proposed Implementation
+
+We are currently implementing a clear buyer list and clear seller list function.
+#### Syntax:
+- `clearb` - clears the buyer list
+- `clears` - clears the seller list
+
+#### Result:
+- specified list is cleared without affecting the other list
+
+#### Implementation of clear buyer and clear seller
+The contents of buyerlist or sellerlist in `BuyerAddressBook.java` or `SellerAddressBook.java` is cleared.
+
+#### Why is it implemented this way
+The content of the uncleared list can be kept as such without reloading a fresh new book as seen in the AB3 command `clear`.
+
+#### Alternatives
+A copy of the uncleared list is kept, next the content of the whole addressbook can be cleared by `clear`, followed by loading of the uncleared content.
+
+### Find buyer/Find seller
+
+#### Syntax:
+- `findb /KEYWORD [MORE_KEYWORDS]`
+- `finds D/KEYWORD [MORE_KEYWORDS]`
+
+Examples:
+- `findb junhong junheng`
+- `finds hdb 5room`
+
+#### Result:
+returns a filtered list of sellers of buyers
+
+#### Implementation of find buyer and find seller
+The finds and findb command calls `updateFilteredSellerList` of `model` and filters the list based on the keywords. The commands then calls `getFilteredSellerList` 
+in order to return the filtered list of sellers.
+
+#### Why is it implemented this way
+Having a seperate buyer and seller list means we need to seperate the find command into find buyer and find seller in order to filter the desired list. Having seperate address books helps in this regard as the version of `getFilteredClientList` can be used.
 
 ### \[Proposed\] Data archiving
 
@@ -329,9 +572,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | find a client by name          | locate details of clients without having to go through the entire list |
 | `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many clients in the address book | sort clients by name           | locate a client easily                                                 |
-=======
-| Priority | As a …​                             | I want to …​                                                                     | So that I can…​                                     |
-|--------|-------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------|
+| Priority | As a …​                             | I want to …​                                                                     | So that I can…​                         
 | `* * *` | housing agent with many clients     | view client details fast                                                         | can deal with customers easily when they contact me |
 | `* * *` | housing agent                       | add a new client quickly with a quick description                                | update my client list efficiently                   |
 | `* * *` | housing agent                       | see relevant information about my clients                                        | understand their needs                              |
@@ -360,7 +601,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  AddressBook shows a list of clients
 3.  User requests to delete a specific client in the list
 4.  AddressBook deletes the client
-=======
+
 **Use case: Add a client**
 
 **MSS**
@@ -401,7 +642,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 clients without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-=======
 1.  Essential: Technical: Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Typical: Performance: Should be able to hold up to 1000 clients without a noticeable sluggishness in performance for typical usage.
 3.  Typical: A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.

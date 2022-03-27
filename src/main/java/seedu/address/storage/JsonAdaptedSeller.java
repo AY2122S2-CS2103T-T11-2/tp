@@ -13,13 +13,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.client.Appointment;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
+import seedu.address.model.property.NullPropertyToSell;
+import seedu.address.model.property.PropertyToSell;
 import seedu.address.model.seller.Seller;
 import seedu.address.model.tag.Tag;
 
-/**
- * Jackson-friendly version of {@link Seller}.
- */
-class JsonAdaptedSeller {
+public class JsonAdaptedSeller {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "seller's %s field is missing!";
 
@@ -27,21 +26,24 @@ class JsonAdaptedSeller {
     private final String phone;
     private final String appointment;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
+    private final JsonAdaptedPropertyToSell propertyToSell;
 
     /**
      * Constructs a {@code JsonAdaptedclient} with the given client details.
      */
     @JsonCreator
     public JsonAdaptedSeller(@JsonProperty("name") String name,
-                             @JsonProperty("phone") String phone,
-                             @JsonProperty("appointment") String appointment,
-                             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+                            @JsonProperty("phone") String phone,
+                            @JsonProperty("appointment") String appointment,
+                            @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
+                            @JsonProperty("propertyToSell") JsonAdaptedPropertyToSell propertyToSell) {
         this.name = name;
         this.phone = phone;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
         this.appointment = appointment;
+        this.propertyToSell = propertyToSell;
     }
 
     /**
@@ -54,17 +56,18 @@ class JsonAdaptedSeller {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         appointment = source.getAppointment().value;
+        propertyToSell = new JsonAdaptedPropertyToSell(source.getPropertyToSell());
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Seller} object.
+     * Converts this Jackson-friendly adapted person object into the model's {@code Buyer} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Seller toModelType() throws IllegalValueException {
-        final List<Tag> sellerTags = new ArrayList<>();
+        final List<Tag> buyerTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tagged) {
-            sellerTags.add(tag.toModelType());
+            buyerTags.add(tag.toModelType());
         }
 
         if (name == null) {
@@ -90,8 +93,11 @@ class JsonAdaptedSeller {
 
         final Appointment modelAppointment = new Appointment(appointment);
 
-        final Set<Tag> modelTags = new HashSet<>(sellerTags);
-        return new Seller(modelName, modelPhone, modelAppointment, modelTags);
-    }
+        final Set<Tag> modelTags = new HashSet<>(buyerTags);
 
+        final PropertyToSell propertyToSell = this.propertyToSell == null
+                ? NullPropertyToSell.getNullPropertyToSell() : new PropertyToSell(this.propertyToSell.getHouse(),
+                this.propertyToSell.getPriceRange(), this.propertyToSell.getAddress());
+        return new Seller(modelName, modelPhone, modelAppointment, modelTags, propertyToSell);
+    }
 }

@@ -11,10 +11,12 @@ Class UiManager
 Class MainWindow
 Class HelpWindow
 Class ResultDisplay
-Class clientListPanel
-Class clientCard
+Class BuyerListPanel
+Class BuyerCard
 Class StatusBarFooter
 Class CommandBox
+Class SellerListPanel
+Class SellerCard
 }
 
 package Model <<Rectangle>> {
@@ -32,26 +34,32 @@ UiManager .left.|> Ui
 UiManager -down-> "1" MainWindow
 MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
-MainWindow *-down-> "1" clientListPanel
+MainWindow *-down-> "1" SellerListPanel
+MainWindow *-down-> "1" BuyerListPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
 
-clientListPanel -down-> "*" clientCard
+SellerListPanel -down-> "*" SellerCard
+BuyerListPanel -down-> "*" BuyerCard
 
 MainWindow -left-|> UiPart
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
-clientListPanel --|> UiPart
-clientCard --|> UiPart
+SellerListPanel --|> UiPart
+SellerCard --|> UiPart
+BuyerListPanel --|> UiPart
+BuyerCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
 
-clientCard ..> Model
+BuyerCard ..> Model
+SellerCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
-clientListPanel -[hidden]left- HelpWindow
+SellerListPanel -[hidden]left- HelpWindow
+BuyerListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter

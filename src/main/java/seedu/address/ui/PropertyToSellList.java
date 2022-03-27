@@ -61,12 +61,12 @@
 //        }
 //
 //        // instanceof handles nulls
-//        if (!(other instanceof ClientCard)) {
+//        if (!(other instanceof BuyerCard)) {
 //            return false;
 //        }
 //
 //        // state check
-//        ClientCard card = (ClientCard) other;
+//        BuyerCard card = (BuyerCard) other;
 //        return id.getText().equals(card.id.getText())
 //                && client.equals(card.client);
 //    }

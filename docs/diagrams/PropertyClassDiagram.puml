@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+Package Property <<Rectangle>>{
+
+class PropertyToBuy
+class PropertyToSell
+
+class PriceRange{
+int low
+int high
+}
+
+class Address {
+String address
+}
+class House {
+HouseType houseType
+Location location
+}
+
+enum HouseType {
+ANY,
+APARTMENT,
+BUNGALOW,
+CONDOMINIUM,
+COLONIAL,
+HDB_FLAT,
+SEMIDETACHED,
+MANSION
+}
+
+
+}
+
+PropertyToBuy *--> House
+PropertyToBuy *--> PriceRange
+
+PropertyToSell *--> House
+PropertyToSell *--> PriceRange
+PropertyToSell *--> Address
+
+
+@enduml

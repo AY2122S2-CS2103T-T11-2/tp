@@ -7,7 +7,7 @@ package seedu.address.model.property;
 public class NullPropertyToBuy extends PropertyToBuy {
 
     private static final NullPropertyToBuy nullPropertyToBuy =
-            new NullPropertyToBuy(new House(HouseType.NULLHOUSETYPE, "NullHouseLocation"),
+            new NullPropertyToBuy(new House(HouseType.NULLHOUSETYPE, ""),
                     new PriceRange(0, 0));
 
     public NullPropertyToBuy(House house, PriceRange priceRange) {

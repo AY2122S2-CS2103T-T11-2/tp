@@ -27,7 +27,7 @@ public enum HouseType {
     CONDOMINIUM("condominium", "condo") {
         @Override
         public String toString() {
-            return "Condomunium";
+            return "Condominium";
         }
     },
     COLONIA("colonia") {
@@ -45,7 +45,7 @@ public enum HouseType {
     SEMIDETACHED("semidetached", "semid", "semi-detached", "semi-d") {
         @Override
         public String toString() {
-            return "Semi-Detached";
+            return "SemiDetached";
         }
     },
     MANSION("mansion") {
@@ -54,10 +54,10 @@ public enum HouseType {
             return "Mansion";
         }
     },
-    NULLHOUSETYPE("nullhouse") {
+    NULLHOUSETYPE("Nullhouse") {
         @Override
         public String toString() {
-            return "Nullhouse";
+            return "";
         }
     };
 

@@ -1,0 +1,34 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Package Client <<Rectangle>>{
+
+Class CLIENT #1616B0
+Class Buyer #9D0012
+Class Seller #9D0012
+
+Class Name #51000A
+Class Phone #51000A
+Class Tag #51000A
+
+Class PropertyToBuy #544400
+Class PropertyToSell #544400
+}
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> CLIENT
+
+Seller -left-|> CLIENT
+Buyer -right-|> CLIENT
+
+CLIENT *--> "1" Name
+CLIENT *--> "1" Phone
+CLIENT *--> "*" Tag
+
+Buyer *--> PropertyToBuy
+Seller *--> PropertyToSell
+
+@enduml

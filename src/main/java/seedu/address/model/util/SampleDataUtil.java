@@ -16,7 +16,9 @@ import seedu.address.model.client.Client;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
 import seedu.address.model.property.NullPropertyToBuy;
+import seedu.address.model.property.NullPropertyToSell;
 import seedu.address.model.property.PropertyToBuy;
+import seedu.address.model.property.PropertyToSell;
 import seedu.address.model.seller.Seller;
 import seedu.address.model.tag.Tag;
 
@@ -26,7 +28,8 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
 
     public static final Appointment NO_APPOINTMENT = new Appointment("");
-    public static final PropertyToBuy NO_DESIRED_PROPERTY = NullPropertyToBuy.getNullPropertyToBuy();
+    public static final PropertyToBuy NULL_PROPERTY_TO_BUY = NullPropertyToBuy.getNullPropertyToBuy();
+    public static final PropertyToSell NULL_PROPERTY_TO_SELL = NullPropertyToSell.getNullPropertyToSell();
 
     public static Client[] getSampleclients() {
         return new Client[] {
@@ -47,15 +50,15 @@ public class SampleDataUtil {
 
     public static Seller[] getSampleSellers() {
         return new Seller[] {
-            new Seller(new Name("Jacky"), new Phone("2103"),
-            NO_APPOINTMENT, getTagSet("friends"))
+            new Seller(new Name("Jacky Seller"), new Phone("2103"),
+            NO_APPOINTMENT, getTagSet("friends"), NULL_PROPERTY_TO_SELL)
         };
     }
 
     public static Buyer[] getSampleBuyers() {
         return new Buyer[] {
-            new Buyer(new Name("Jacky"), new Phone("2103"),
-            NO_APPOINTMENT, getTagSet("friends"), NO_DESIRED_PROPERTY)
+            new Buyer(new Name("Jacky Buyer"), new Phone("2103"),
+            NO_APPOINTMENT, getTagSet("friends"), NULL_PROPERTY_TO_BUY)
         };
     }
 

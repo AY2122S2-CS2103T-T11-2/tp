@@ -29,7 +29,8 @@ AgentSee is a **desktop app for managing house selling clients and for quick fil
 
    * **`list`** : Lists all contacts.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a client named `John Doe` to the AgenSee contacts.
+   * **`addbuyer`**`n/John Doe p/98765432: 
+   Adds a client named `John Doe` to the AgenSee contacts.
 
    * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
 
@@ -69,38 +70,31 @@ AgentSee is a **desktop app for managing house selling clients and for quick fil
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
-
-### Adding a client: `add`
-
-Adds a client to the contact list.
-
-Format: `add n/NAME d/DESCRIPTION p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...`
-
-Note: Must include n/ d/ p/ e/ a/ r/, t/ is optional
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A client can have any number of tags (including 0)
-</div>
-
-Examples:
-* `add n/John Doe d/A student in NUS p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Forgetful`
-* `add n/Betsy Crowe d/From Malaysia t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/Dangerous t/criminal`
-
 ### Adding a buyer: `addbuyer`
 
 Adds a client as a Buyer to the contact list.
 
-Format: `addbuyer n/NAME d/DESCRIPTION p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...
+Format: `addbuyer n/NAME d/DESCRIPTION p/PHONE_NUMBER [t/TAG]...
 
 Examples:
-* `add n/Yu Qi d/A baller p/98765432 e/johnd@example.com a/Tampines street 66, block 123, #01-01 r/Cool`
-* `add n/Janald d/From Singapore t/friend e/betsycrowe@example.com a/Bishan Ave 1, #04-12 p/1234567 r/Smart t/criminal`
+* `addbuyer n/Yu Qi p/98765432
+* `addbuyer n/Janald t/friend t/criminal`
+
+### Adding a seller: `addseller`
+
+Adds a client as a Seller to the contact list.
+
+Format: `addseller n/NAME d/DESCRIPTION p/PHONE_NUMBER [t/TAG]...
+
+Examples:
+* `addseller n/Yu Qi p/98765432
+* `addseller n/Janald t/friend t/criminal`
 
 ### Listing all clients : `list`
 
@@ -129,28 +123,48 @@ Examples:
 
 
 
-### Editing a client : `edit`
+### Editing a buyer : `editbuyer`
 
-Edits an existing client in the contact list.
+Edits an existing buyer in the contact list.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `editbuyer INDEX [n/NAME] [p/PHONE] [t/TAG]…​`
 
-* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed buyer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
+* The order of the fields can be in any order
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the client will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the buyer will be removed i.e adding of tags is not cumulative.
 * You can remove all the client’s tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd client to be `Betsy Crower` and clears all existing tags.
+*  `editbuyer 1 n/Hong` Edits only the name of the 1st buyer to be `Chua`.
+*  `editbuyer 2 n/Betsy Crower t/` Edits the name of the 2nd buyer to be `Betsy Crower` and clears all existing tags.
+
+### Editing a seller : `editseller`
+
+Edits an existing seller in the contact list.
+
+Format: `editseller INDEX [n/NAME] [p/PHONE] [t/TAG]…​`
+
+* Edits the seller at the specified `INDEX`. The index refers to the index number shown in the displayed seller list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* The order of the fields can be in any order
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the seller will be removed i.e adding of tags is not cumulative.
+* You can remove all the seller’s tags by typing `t/` without
+  specifying any tags after it.
+
+Examples:
+*  `editseller 1 p/91234567 n/ Chua` Edits the phone number and name of the 1st seller to be `91234567` and `Chua` respectively.
+*  `editseller 2 n/Betsy Crower t/` Edits the name of the 2nd seller to be `Betsy Crower` and clears all existing tags.
 
 
 ### Locating clients by name: `find`
 
-Finds clients whose names contain any of the given keywords.
-=======
+#### Finds clients whose names contain any of the given keywords.
+
+
 ### Locating clients: `find`
 
 Finds clients whose selected field contain any of the given keywords.
@@ -159,8 +173,6 @@ Finds clients whose selected field contain any of the given keywords.
 Format: `find field/KEYWORD1 [MORE_KEYWORDS]`
 
 * The fields are:
-  * address `a/`
-  * email `e/`
   * name `n/`
   * phone `p/`
 * The search is **case-insensitive**. e.g `hans` will match `Hans`
@@ -172,7 +184,6 @@ Format: `find field/KEYWORD1 [MORE_KEYWORDS]`
 
 Examples:
 * `find n/John` returns `john` and `John Doe`
-* `find e/alex david` returns `alex123@gmail.com`, `david456@abc.com`<br>
 
 ### Creating an appointment: `appointment`
 
@@ -238,11 +249,10 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**AddBuyer** | `addbuyer n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**AddBuyer** | `addbuyer n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `addbuyer n/James Ho p/22224444`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**EditBuyer** | `editbuyer n/NAME p/PHONE_NUMBER [t/TAG]…​` <br> e.g., `edit 2 n/James Ho p/22224444 `
 **Find** | `find prefix/ KEYWORD [MORE_KEYWORDS]`<br> e.g., `find n/ James Jake`
 **List** | `list`
 **Help** | `help`

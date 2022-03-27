@@ -13,7 +13,7 @@ public class PropertyToSell {
     /**
      * The PriceRange a buyer is willing to receive to sell the House.
      */
-    private PriceRange sellRange;
+    private PriceRange priceRange;
 
     /**
      * The exact address of this house.
@@ -23,12 +23,12 @@ public class PropertyToSell {
     /**
      * Constructs a PropertyToSell for the seller.
      * @param house the house that the seller is selling.
-     * @param sellRange the PriceRange that a seller is willing to sell the property for.
+     * @param priceRange the PriceRange that a seller is willing to sell the property for.
      * @param address the exact address of the property the seller is selling.
      */
-    public PropertyToSell(House house, PriceRange sellRange, String address) {
+    public PropertyToSell(House house, PriceRange priceRange, String address) {
         this.house = house;
-        this.sellRange = sellRange;
+        this.priceRange = priceRange;
         this.address = address;
     }
 
@@ -36,8 +36,8 @@ public class PropertyToSell {
         return this.house;
     }
 
-    public PriceRange getSellRange() {
-        return this.sellRange;
+    public PriceRange getPriceRange() {
+        return this.priceRange;
     }
 
     public String getAddress() {
@@ -49,7 +49,7 @@ public class PropertyToSell {
         return other == this // short circuit if same object
             || (other instanceof PropertyToSell // instanceof handles nulls
             && house.equals(((PropertyToSell) other).house)
-            && sellRange.equals(((PropertyToSell) other).sellRange)
+            && priceRange.equals(((PropertyToSell) other).priceRange)
             && address.equals((((PropertyToSell) other).address))); // state check
     }
 }

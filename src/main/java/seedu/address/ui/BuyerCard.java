@@ -14,9 +14,9 @@ import seedu.address.model.property.NullPropertyToBuy;
 /**
  * An UI component that displays information of a {@code client}.
  */
-public class ClientCard extends UiPart<Region> {
+public class BuyerCard extends UiPart<Region> {
 
-    private static final String FXML = "ClientListCard.fxml";
+    private static final String FXML = "BuyerListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -52,24 +52,22 @@ public class ClientCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public ClientCard(Buyer client, int displayedIndex) {
+    public BuyerCard(Buyer buyer, int displayedIndex) {
         super(FXML);
-        this.client = client;
+        this.client = buyer;
         id.setText(displayedIndex + ". ");
-        name.setText(client.getName().fullName);
-        phone.setText(client.getPhone().value);
-        appointment.setText(client.getAppointment().getAppointmentDetail());
-        client.getTags().stream()
+        name.setText(buyer.getName().fullName);
+        phone.setText(buyer.getPhone().value);
+        appointment.setText(buyer.getAppointment().getAppointmentDetail());
+        buyer.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        if (client.getDesiredProperty() instanceof NullPropertyToBuy) {
-            System.out.println("The NullPropertyToBuy is accessed");
-
-        } else {
-            propertyType.setText(client.getDesiredProperty().getHouse().getHouseTypeToString());
-            propertyLocation.setText(client.getDesiredProperty().getHouse().getLocationToString());
-            propertyLowerPrice.setText(client.getDesiredProperty().getPriceRange().getLowerToString());
-            propertyUpperPrice.setText(client.getDesiredProperty().getPriceRange().getUpperToString());
+        if (!(buyer.getPropertyToBuy() instanceof NullPropertyToBuy)) {
+            propertyType.setText("Type: " + buyer.getPropertyToBuy().getHouse().getHouseTypeToString());
+            propertyLocation.setText("Location: " + buyer.getPropertyToBuy().getHouse().getLocationToString());
+            propertyLowerPrice.setText("Price: " + buyer.getPropertyToBuy().getPriceRange().getLowerToString()
+                                               + " to " + buyer.getPropertyToBuy().getPriceRange().getUpperToString());
+            //propertyUpperPrice.setText(""buyer.getPropertyToBuy().getPriceRange().getUpperToString());
         }
     }
 
@@ -81,12 +79,12 @@ public class ClientCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ClientCard)) {
+        if (!(other instanceof BuyerCard)) {
             return false;
         }
 
         // state check
-        ClientCard card = (ClientCard) other;
+        BuyerCard card = (BuyerCard) other;
         return id.getText().equals(card.id.getText())
                 && client.equals(card.client);
     }

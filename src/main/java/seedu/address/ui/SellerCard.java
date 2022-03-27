@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.property.NullPropertyToSell;
 import seedu.address.model.seller.Seller;
 
 /**
@@ -38,6 +39,16 @@ public class SellerCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label appointment;
+    @FXML
+    private Label propertyType;
+    @FXML
+    private Label propertyLocation;
+    @FXML
+    private Label propertyLowerPrice;
+    @FXML
+    private Label propertyUpperPrice;
+    @FXML
+    private Label propertyAddress;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -52,6 +63,15 @@ public class SellerCard extends UiPart<Region> {
         seller.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (!(seller.getPropertyToSell() instanceof NullPropertyToSell)) {
+            propertyType.setText("Type: " + seller.getPropertyToSell().getHouse().getHouseTypeToString());
+            propertyLocation.setText("Location: " + seller.getPropertyToSell().getHouse().getLocationToString());
+            propertyLowerPrice.setText("Price: " + seller.getPropertyToSell().getPriceRange().getLowerToString()
+                                    + " to " + seller.getPropertyToSell().getPriceRange().getUpperToString());
+            //propertyLowerPrice.setText(seller.getPropertyToSell().getPriceRange().getLowerToString());
+            //propertyUpperPrice.setText(seller.getPropertyToSell().getPriceRange().getUpperToString());
+            propertyAddress.setText("Address: " + seller.getPropertyToSell().getAddress());
+        }
     }
 
     @Override
@@ -62,7 +82,7 @@ public class SellerCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ClientCard)) {
+        if (!(other instanceof BuyerCard)) {
             return false;
         }
 

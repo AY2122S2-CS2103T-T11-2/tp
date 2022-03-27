@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPropertyToBuyCommand;
-import seedu.address.logic.commands.AppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.property.House;
 import seedu.address.model.property.HouseType;
@@ -37,7 +36,7 @@ public class AddPropertyToBuyCommandParser implements Parser<AddPropertyToBuyCom
         }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_LOCATION, PREFIX_PRICE_RANGE, PREFIX_HOUSE_TYPE)) {
-            throw new ParseException(AppointmentCommand.MESSAGE_EMPTY_INPUT_DATE);
+            throw new ParseException(AddPropertyToBuyCommand.MESSAGE_USAGE);
         }
         HouseType houseType = ParserUtil.parseHouseType(argMultimap.getValue(PREFIX_HOUSE_TYPE).get());
         String location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get());

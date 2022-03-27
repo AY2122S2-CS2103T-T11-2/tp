@@ -40,6 +40,12 @@
                     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
                 </children>
             </HBox>
+            <Label fx:id="propertyType" styleClass="cell_big_label" />
+            <Label fx:id="propertyLocation" styleClass="cell_big_label" />
+            <Label fx:id="propertyLowerPrice" styleClass="cell_big_label" />
+            <Label fx:id="propertyUpperPrice" styleClass="cell_big_label"  />
+            <Label fx:id="propertyAddress" styleClass="cell_big_label"  />
+            <Label></Label>
             <FlowPane fx:id="tags" />
             <HBox>
                 <children>

@@ -36,7 +36,7 @@ public class JsonAdaptedBuyer {
                             @JsonProperty("phone") String phone,
                             @JsonProperty("appointment") String appointment,
                             @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
-                            @JsonProperty("property") JsonAdaptedPropertyToBuy propertyToBuy) {
+                            @JsonProperty("propertyToBuy") JsonAdaptedPropertyToBuy propertyToBuy) {
         this.name = name;
         this.phone = phone;
         if (tagged != null) {
@@ -56,7 +56,7 @@ public class JsonAdaptedBuyer {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         appointment = source.getAppointment().value;
-        propertyToBuy = new JsonAdaptedPropertyToBuy(source.getDesiredProperty());
+        propertyToBuy = new JsonAdaptedPropertyToBuy(source.getPropertyToBuy());
     }
 
     /**
