@@ -76,17 +76,6 @@ public class ModelManager implements Model {
         userPrefs.setGuiSettings(guiSettings);
     }
 
-    // @Override
-    // public Path getAddressBookFilePath() {
-    //     return userPrefs.getAddressBookFilePath();
-    // }
-    //
-    // @Override
-    // public void setAddressBookFilePath(Path addressBookFilePath) {
-    //     requireNonNull(addressBookFilePath);
-    //     userPrefs.setAddressBookFilePath(addressBookFilePath);
-    // }
-
     @Override
     public Path getSellerAddressBookFilePath() {
         return userPrefs.getSellerAddressBookFilePath();
@@ -108,42 +97,6 @@ public class ModelManager implements Model {
         requireNonNull(buyerAddressBookFilePath);
         userPrefs.setBuyerAddressBookFilePath(buyerAddressBookFilePath);
     }
-
-    //  =========== AddressBook ================================================================================
-    //
-    // @Override
-    // public void setAddressBook(ReadOnlyAddressBook addressBook) {
-    //     this.addressBook.resetData(addressBook);
-    // }
-    //
-    // @Override
-    // public ReadOnlyAddressBook getAddressBook() {
-    //     return addressBook;
-    // }
-    //
-    // @Override
-    // public boolean hasClient(Client client) {
-    //     requireNonNull(client);
-    //     return addressBook.hasclient(client);
-    // }
-    //
-    // @Override
-    // public void deleteClient(Client target) {
-    //     addressBook.removeclient(target);
-    // }
-    //
-    // @Override
-    // public void addClient(Client client) {
-    //     addressBook.addclient(client);
-    //     updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
-    // }
-    //
-    // @Override
-    // public void setClient(Client target, Client editedClient) {
-    //     requireAllNonNull(target, editedClient);
-    //
-    //     addressBook.setclient(target, editedClient);
-    //}
 
     //========== For addbuyer============//
     @Override
@@ -243,23 +196,6 @@ public class ModelManager implements Model {
     public void sortFilteredSellerList(String comparator, String order) {
         sellerAddressBook.sortSellers(comparator, order);
     }
-
-    //  =========== Filtered client List Accessors =============================================================
-    //
-    // /**
-    //  * Returns an unmodifiable view of the list of {@code client} backed by the internal list of
-    //  * {@code versionedAddressBook}
-    //  */
-    // @Override
-    // public ObservableList<Client> getFilteredClientList() {
-    //     return filteredClients;
-    // }
-    //
-    // @Override
-    // public void updateFilteredClientList(Predicate<Client> predicate) {
-    //     requireNonNull(predicate);
-    //     filteredClients.setPredicate(predicate);
-    // }
 
     @Override
     public boolean equals(Object obj) {

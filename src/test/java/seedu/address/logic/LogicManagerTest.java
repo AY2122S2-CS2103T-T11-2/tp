@@ -17,10 +17,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.BuyerAddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.SellerAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonBuyerAddressBookStorage;
 import seedu.address.storage.JsonSellerAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -37,14 +35,12 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
         JsonSellerAddressBookStorage sellerAddressBookStorage = new JsonSellerAddressBookStorage(
                 temporaryFolder.resolve("selleraddressbook.json"));
         JsonBuyerAddressBookStorage buyerAddressBookStorage = new JsonBuyerAddressBookStorage(
                 temporaryFolder.resolve("buyeraddressbook.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage, sellerAddressBookStorage,
+        StorageManager storage = new StorageManager(userPrefsStorage, sellerAddressBookStorage,
                 buyerAddressBookStorage);
         logic = new LogicManager(model, storage);
     }
@@ -54,41 +50,6 @@ public class LogicManagerTest {
         String invalidCommand = "uicfhmowqewca";
         assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND);
     }
-
-    //@Test
-    //public void execute_commandExecutionError_throwsCommandException() {
-    //    String deleteCommand = "delete 9";
-    //    assertCommandException(deleteCommand, MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
-    //}
-
-    //@Test
-    //public void execute_storageThrowsIoException_throwsCommandException() {
-    //    // Setup LogicManager with JsonAddressBookIoExceptionThrowingStub
-    //    JsonAddressBookStorage addressBookStorage =
-    //            new JsonAddressBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
-    //    JsonUserPrefsStorage userPrefsStorage =
-    //            new JsonUserPrefsStorage(temporaryFolder.resolve("ioExceptionUserPrefs.json"));
-    //    JsonSellerAddressBookStorage sellerAddressBookStorage = new JsonSellerAddressBookStorage(
-    //            temporaryFolder.resolve("selleraddressbook.json"));
-    //    JsonBuyerAddressBookStorage buyerAddressBookStorage = new JsonBuyerAddressBookStorage(
-    //            temporaryFolder.resolve("buyeraddressbook.json"));
-    //    StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage,
-    //            sellerAddressBookStorage, buyerAddressBookStorage);
-    //    logic = new LogicManager(model, storage);
-    //
-    //    // Execute add command
-    //    String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY;
-    //    Client expectedClient = new ClientBuilder(AMY).withTags().build();
-    //    ModelManager expectedModel = new ModelManager();
-    //    expectedModel.addClient(expectedClient);
-    //    String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
-    //    assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
-    //}
-
-    // @Test
-    // public void getFilteredclientList_modifyList_throwsUnsupportedOperationException() {
-    //     assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredclientList().remove(0));
-    // }
 
     @Test
     public void getFilteredBuyerList_modifyList_throwsUnsupportedOperationException() {
@@ -154,17 +115,4 @@ public class LogicManagerTest {
         assertEquals(expectedModel, model);
     }
 
-    /**
-     * A stub class to throw an {@code IOException} when the save method is called.
-     */
-    private static class JsonAddressBookIoExceptionThrowingStub extends JsonAddressBookStorage {
-        private JsonAddressBookIoExceptionThrowingStub(Path filePath) {
-            super(filePath);
-        }
-
-        @Override
-        public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
-            throw DUMMY_IO_EXCEPTION;
-        }
-    }
 }

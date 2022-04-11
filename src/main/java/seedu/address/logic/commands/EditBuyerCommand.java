@@ -93,8 +93,6 @@ public class EditBuyerCommand extends Command {
         }
 
         model.setBuyer(buyerToEdit, editedBuyer);
-        //Todo: To be reviewed later
-        // model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
         model.updateFilteredBuyerList(PREDICATE_SHOW_ALL_BUYERS);
         return new CommandResult(String.format(MESSAGE_EDIT_BUYER_SUCCESS, editedBuyer));
     }

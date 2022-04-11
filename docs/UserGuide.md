@@ -4,12 +4,14 @@ title: User Guide
 ---
 
 AgentSee is a **desktop application for property agents to manage clients.** It is:
+
 * optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). 
   - So if you can type fast, AgentSee can get your client management tasks done faster than traditional GUI apps!
   
 * Easy to use! The User Guide and the application is very easy to navigate!
 
 * ~~Cheap~~ FREE!
+
 * Table of Contents
 {:toc}
 --------------------------------------------------------------------------------------------------------------------
@@ -181,7 +183,8 @@ Format: `appt-b INDEX time/TIME`
 * Create an appointment with the buyer at the specified `INDEX`. The index refers to the index number shown in the displayed buyer list. The index **must be a positive integer** 1, 2, 3, …​ within the size of the displayed buyer list.
 * The input `TIME` is in a `yyyy-mm-dd-hh-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
 * The time entered must be a time in the future.
-* To **delete an appointment** with a buyer, use the keyword `reset` after the `time/` prefix
+* To **delete an appointment** with a buyer, use the keyword `reset` after the `time/` prefix.
+* Multiple clients may have the same appointment `TIME` (E.g. Zoom meetings).
 
 Examples:
 * `appt-b 1 time/2023-01-01-12-12` sets a new appointment for the 1st buyer on the displayed buyer list on 1st January 2023 and 12:12pm.
@@ -355,7 +358,7 @@ Function: Display the seller list.
 
 Format: `list-s`
 
-#### `add-s`
+#### Adding sellers. `add-s`
 
 Function: Add a seller to the seller list. This is essential for you to add a seller's data.
 
@@ -417,7 +420,8 @@ Format: `appt-s INDEX time/TIME`
 * Create an appointment with the seller at the specified `INDEX`. The index refers to the index number shown in the displayed seller list. The index **must be a positive integer** 1, 2, 3, …​ within the size of the displayed seller list.
 * The input `TIME` is in a `yyyy-mm-dd-hh-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
 * The time entered must be a time in the future.
-* * To delete an appointment with a seller, use the keyword `reset` after the `time/` prefix
+* To delete an appointment with a seller, use the keyword `reset` after the `time/` prefix.
+* Multiple clients may have the same appointment `TIME` (E.g. Zoom meetings).
 
 Examples:
 * `appt-s 1 time/2023-01-01-12-12` sets a new appointment for the 1st seller on the displayed seller list on 1st January 2023 and 12:12pm.
@@ -610,9 +614,10 @@ And here are the examples of 2 sellers, one has a property and one does not have
 
 #### Tag
 - empty tag should be `[]`
+
 #### PropertyToBuy
 - empty property must be `null`, not `"null"` or `'null'`
-- for the `housetype` under `house`, the housetype provided must be one of our [defined houseType](#house-type).
+- for the `housetype` under `house`, the housetype provided must be one of the defined house types.
 Otherwise, all other value will be translated to `Unspecified` housetype!
 - Currently, the `housetype` cannot put `null` inside it, otherwise the program cannot run (We will solve it in v1.4!)
 - `pricerange` must be a digit string, and `lower` value must be less than or equal to `upper`

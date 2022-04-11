@@ -2,7 +2,8 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalBuyers.getTypicalBuyerAddressBook;
+import static seedu.address.testutil.TypicalSellers.getTypicalSellerAddressBook;
 
 import java.nio.file.Path;
 
@@ -11,8 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.BuyerAddressBook;
+import seedu.address.model.ReadOnlyBuyerAddressBook;
+import seedu.address.model.ReadOnlySellerAddressBook;
+import seedu.address.model.SellerAddressBook;
 import seedu.address.model.UserPrefs;
 
 public class StorageManagerTest {
@@ -24,14 +27,13 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         JsonSellerAddressBookStorage sellerAddressBookStorage = new JsonSellerAddressBookStorage(
                 getTempFilePath("sab")
         );
         JsonBuyerAddressBookStorage buyerAddressBookStorage = new JsonBuyerAddressBookStorage(
                 getTempFilePath("bab"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, sellerAddressBookStorage,
+        storageManager = new StorageManager(userPrefsStorage, sellerAddressBookStorage,
                 buyerAddressBookStorage);
     }
 
@@ -53,22 +55,41 @@ public class StorageManagerTest {
         assertEquals(original, retrieved);
     }
 
+
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void buyerAddressBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link JsonAddressBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
          */
-        AddressBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        BuyerAddressBook original = getTypicalBuyerAddressBook();
+        storageManager.saveBuyerAddressBook(original);
+        ReadOnlyBuyerAddressBook retrieved = storageManager.readBuyerAddressBook().get();
+        assertEquals(original, new BuyerAddressBook(retrieved));
     }
 
     @Test
-    public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+    public void sellerAddressBookReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link JsonAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
+         */
+        SellerAddressBook original = getTypicalSellerAddressBook();
+        storageManager.saveSellerAddressBook(original);
+        ReadOnlySellerAddressBook retrieved = storageManager.readSellerAddressBook().get();
+        assertEquals(original, new SellerAddressBook(retrieved));
+    }
+
+    @Test
+    public void getBuyerAddressBookFilePath() {
+        assertNotNull(storageManager.getBuyerAddressBookFilePath());
+    }
+
+    @Test
+    public void getSellerAddressBookFilePath() {
+        assertNotNull(storageManager.getSellerAddressBookFilePath());
     }
 
 }

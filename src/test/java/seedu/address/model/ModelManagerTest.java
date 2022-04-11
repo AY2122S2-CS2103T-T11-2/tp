@@ -66,39 +66,6 @@ public class ModelManagerTest {
         assertEquals(guiSettings, modelManager.getGuiSettings());
     }
 
-    // @Test
-    // public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
-    //     assertThrows(NullPointerException.class, () -> modelManager.setAddressBookFilePath(null));
-    // }
-
-    // @Test
-    // public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
-    //     Path path = Paths.get("address/book/file/path");
-    //     modelManager.setAddressBookFilePath(path);
-    //     assertEquals(path, modelManager.getAddressBookFilePath());
-    // }
-    //
-    // @Test
-    // public void hasclient_nullclient_throwsNullPointerException() {
-    //     assertThrows(NullPointerException.class, () -> modelManager.hasClient(null));
-    // }
-    //
-    // @Test
-    // public void hasclient_clientNotInAddressBook_returnsFalse() {
-    //     assertFalse(modelManager.hasClient(ALICE));
-    // }
-    //
-    // @Test
-    // public void hasclient_clientInAddressBook_returnsTrue() {
-    //     modelManager.addClient(ALICE);
-    //     assertTrue(modelManager.hasClient(ALICE));
-    // }
-    //
-    // @Test
-    // public void getFilteredclientList_modifyList_throwsUnsupportedOperationException() {
-    //     assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredClientList().remove(0));
-    // }
-
     @Test
     public void equals() {
         BuyerAddressBook buyerAddressBook = new BuyerAddressBookBuilder().withBuyer(ALICE).withBuyer(BOB).build();

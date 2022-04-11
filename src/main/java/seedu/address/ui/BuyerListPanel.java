@@ -13,9 +13,9 @@ import seedu.address.model.buyer.Buyer;
 /**
  * Panel containing the list of clients.
  */
-public class ClientListPanel extends UiPart<Region> {
-    private static final String FXML = "ClientListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ClientListPanel.class);
+public class BuyerListPanel extends UiPart<Region> {
+    private static final String FXML = "BuyerListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(BuyerListPanel.class);
 
     @FXML
     private ListView<Buyer> clientListView;
@@ -23,7 +23,7 @@ public class ClientListPanel extends UiPart<Region> {
     /**
      * Creates a {@code clientListPanel} with the given {@code ObservableList}.
      */
-    public ClientListPanel(ObservableList<Buyer> clientList) {
+    public BuyerListPanel(ObservableList<Buyer> clientList) {
         super(FXML);
         clientListView.setItems(clientList);
         clientListView.setCellFactory(listView -> new ClientListViewCell());

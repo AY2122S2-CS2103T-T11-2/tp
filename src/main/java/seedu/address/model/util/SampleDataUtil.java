@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.address.model.AddressBook;
 import seedu.address.model.BuyerAddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyBuyerAddressBook;
 import seedu.address.model.ReadOnlySellerAddressBook;
 import seedu.address.model.SellerAddressBook;
@@ -84,14 +82,6 @@ public class SampleDataUtil {
             new Buyer(new Name("Dara"), new Phone("12345678"),
                     NO_APPOINTMENT, getTagSet("fav"), NULL_PROPERTY_TO_BUY)
         };
-    }
-
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
-        for (Client sampleClient : getSampleclients()) {
-            sampleAb.addclient(sampleClient);
-        }
-        return sampleAb;
     }
 
     public static ReadOnlySellerAddressBook getSampleSellerAddressBook() {

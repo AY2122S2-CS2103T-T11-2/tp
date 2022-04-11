@@ -50,7 +50,6 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            //storage.saveAddressBook(model.getAddressBook());
             storage.saveSellerAddressBook(model.getSellerAddressBook());
             storage.saveBuyerAddressBook(model.getBuyerAddressBook());
         } catch (IOException ioe) {
@@ -59,21 +58,6 @@ public class LogicManager implements Logic {
 
         return commandResult;
     }
-
-    // @Override
-    // public ReadOnlyAddressBook getAddressBook() {
-    //     return model.getAddressBook();
-    // }
-    //
-    // @Override
-    // public ObservableList<Client> getFilteredclientList() {
-    //     return model.getFilteredClientList();
-    // }
-    //
-    // @Override
-    // public Path getAddressBookFilePath() {
-    //     return model.getAddressBookFilePath();
-    // }
 
     @Override
     public GuiSettings getGuiSettings() {

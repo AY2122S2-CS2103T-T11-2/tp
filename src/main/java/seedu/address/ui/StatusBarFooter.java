@@ -21,7 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
      */
     public StatusBarFooter(Path saveLocation) {
         super(FXML);
-        saveLocationStatus.setText("TEST");
+        saveLocationStatus.setText("Welcome to AgentSee!");
     }
 
 }

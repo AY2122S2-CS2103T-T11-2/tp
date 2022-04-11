@@ -26,6 +26,7 @@ Given below are my contributions to the project.
     * FXML for UI updates
     * `NullPropertyToBuy` (initial class before enhancements).
     * `TypicalPropertyToBuy` & `TypicalPropertyToSell`, `HouseTypeTest`, `PropertyCommandsTestUtil`
+    * `BuyerAddressBookTest` & `SellerAddressBookTest` classes
 
 * **Enhancements implemented**:
   * Improved Find Command for v1.2 - Keywords need not exactly match the client name, and can simply be contained in them.
@@ -51,8 +52,11 @@ Given below are my contributions to the project.
     * Added explanation for design choices in `add-b`, `add-s`, `add-ptb`, `add-pts`
 
 * **Contributions to the DG**:
-    * Added implementation details for `find` command
+    * Added initial implementation details for `find` command
+    * Added implementation details for `add-b` command
     * Added User Stories and Use cases to Developer Guide
+    * Fix Use cases
+    * Fix UML diagrams and other components referencing AB3 commands
 
 * **Contributions to team tasks**:
     * Set up initial GitHub organization and repository

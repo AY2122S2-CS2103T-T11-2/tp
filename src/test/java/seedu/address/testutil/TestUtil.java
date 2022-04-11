@@ -27,25 +27,4 @@ public class TestUtil {
         }
         return SANDBOX_FOLDER.resolve(fileName);
     }
-
-    // /**
-    //  * Returns the middle index of the client in the {@code model}'s client list.
-    //  */
-    // public static Index getMidIndex(Model model) {
-    //     return Index.fromOneBased(model.getFilteredClientList().size() / 2);
-    // }
-    //
-    // /**
-    //  * Returns the last index of the client in the {@code model}'s client list.
-    //  */
-    // public static Index getLastIndex(Model model) {
-    //     return Index.fromOneBased(model.getFilteredClientList().size());
-    // }
-    //
-    // /**
-    //  * Returns the client in the {@code model}'s client list at {@code index}.
-    //  */
-    // public static Client getClient(Model model, Index index) {
-    //     return model.getFilteredClientList().get(index.getZeroBased());
-    // }
 }

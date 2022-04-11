@@ -52,7 +52,7 @@ The rest of the App consists of four components.
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete-b 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -606,48 +606,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is `AgentSee` and the **Actor** is the `user`, unless specified otherwise)
 
 
-**Use case: Delete a client**
+**Use case: Delete a seller**
 
 **MSS**
 
-1.  User requests to list clients
-2.  AddressBook shows a list of clients
-3.  User requests to delete a specific client in the list
-4.  AddressBook deletes the client
+1. User requests to list sellers
+2. System shows a list of sellers
+3. User requests to delete a specific seller in the list
+4. System deletes the seller
 
-**Use case: Add a client**
-
-**MSS**
-
-1.  User types in client information
-2.  AddressBook adds the new client
-
-
-    Use case ends.
+Use case ends
 
 **Extensions**
 
-* 1a. The wrong format is used.
+* 3a. System detects an error in User input.
+  * 3a1. System shows an error message.
+    
+    Use case resumes from step 3.
+
+**Use case: Add a seller**
+
+**MSS**
+
+1.  User types in seller information
+2.  System adds the new seller
+
+Use case ends
+
+**Extensions**
+
+* 1a. System detects an error in User input.
 
   * 1a1. System shows an error message.
 
-    Use case resumes at step 1.
-
-* 1b. A duplicate client is entered.
-
-    * 1b. System shows an error message.
-
-      Use case resumes at step 1.
+    Use case resumes from step 1.
 
 *{More to be added}*
 
-**Use case: Edit a client**
-
-*{More to be added}*
-
-**Use case: Delete a client**
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 

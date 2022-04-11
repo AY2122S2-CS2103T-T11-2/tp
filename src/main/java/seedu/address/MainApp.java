@@ -15,20 +15,16 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-//import seedu.address.model.AddressBook;
 import seedu.address.model.BuyerAddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyBuyerAddressBook;
 import seedu.address.model.ReadOnlySellerAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.SellerAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.BuyerAddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonBuyerAddressBookStorage;
 import seedu.address.storage.JsonSellerAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -64,12 +60,11 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
         SellerAddressBookStorage sellerAddressBookStorage =
                 new JsonSellerAddressBookStorage(userPrefs.getSellerAddressBookFilePath());
         BuyerAddressBookStorage buyerAddressBookStorage =
                 new JsonBuyerAddressBookStorage(userPrefs.getBuyerAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage, sellerAddressBookStorage,
+        storage = new StorageManager(userPrefsStorage, sellerAddressBookStorage,
                 buyerAddressBookStorage);
 
         initLogging(config);
@@ -87,7 +82,6 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
         Optional<ReadOnlySellerAddressBook> sellerAddressBookOptional;
         Optional<ReadOnlyBuyerAddressBook> buyerAddressBookOptional;
 
