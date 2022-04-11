@@ -28,8 +28,7 @@ public class AppointmentBuyerCommandParser implements Parser<AppointmentBuyerCom
         }
 
         if (!argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AppointmentBuyerCommand.MESSAGE_EMPTY_INPUT_DATE));
+            throw new ParseException(AppointmentBuyerCommand.MESSAGE_EMPTY_INPUT_DATE);
         }
 
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
@@ -39,7 +38,6 @@ public class AppointmentBuyerCommandParser implements Parser<AppointmentBuyerCom
         if (!appointment.isLaterThanCurrentTime()) {
             throw new ParseException(AppointmentBuyerCommand.MESSAGE_TIME_IN_PAST);
         }
-
         return new AppointmentBuyerCommand(index, appointment);
     }
 }

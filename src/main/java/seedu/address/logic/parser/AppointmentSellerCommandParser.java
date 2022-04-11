@@ -28,8 +28,7 @@ public class AppointmentSellerCommandParser implements Parser<AppointmentSellerC
         }
 
         if (!argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AppointmentSellerCommand.MESSAGE_EMPTY_INPUT_DATE));
+            throw new ParseException(AppointmentSellerCommand.MESSAGE_EMPTY_INPUT_DATE);
         }
 
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());

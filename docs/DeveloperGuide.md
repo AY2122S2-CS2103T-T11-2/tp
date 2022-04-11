@@ -397,7 +397,8 @@ The following Sequence Diagrams summarizes the various steps involved:
 It alters the internal list completely, so that the app 'saves' users last sorting option.
 
 **Cons:**
-Some people might not want the sorted result to be saved.
+Some people might not want the sorted result to be saved. 
+Currently we are exploring other options to sort the list besides modifying the structure of internal list directly.
 
 ### \[Proposed\] Undo/redo feature
 

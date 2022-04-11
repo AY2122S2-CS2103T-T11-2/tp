@@ -15,11 +15,11 @@ Class "<<interface>>\nStorage" as Storage
 Class StorageManager
 Class JsonAdaptedTag
 
-package "BuyerAddressBook Storage" #F4F6F6{
-Class "<<interface>>\nBuyerAddressBookStorage" as BuyerAddressBookStorage
-Class JsonBuyerAddressBookStorage
-Class JsonSerializableBuyerAddressBook
-Class JsonAdaptedBuyer
+package "AddressBook Storage" #F4F6F6{
+Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
+Class JsonAddressBookStorage
+Class JsonSerializableAddressBook
+Class JsonAdaptedclient
 }
 
 package "SellerAddressBook Storage" #F4F6F6{
@@ -34,18 +34,18 @@ HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
 StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" BuyerAddressBookStorage
+StorageManager -up-> "1" AddressBookStorage
 StorageManager -up-> "1" SellerAddressBookStorage
 
 Storage -right-|> UserPrefsStorage
-Storage -right-|> BuyerAddressBookStorage
+Storage -right-|> AddressBookStorage
 Storage -left-|> SellerAddressBookStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonBuyerAddressBookStorage .up.|> BuyerAddressBookStorage
-JsonBuyerAddressBookStorage ..> JsonSerializableBuyerAddressBook
-JsonSerializableBuyerAddressBook --> "*" JsonAdaptedBuyer
-JsonAdaptedBuyer --> "*" JsonAdaptedTag
+JsonAddressBookStorage .up.|> AddressBookStorage
+JsonAddressBookStorage ..> JsonSerializableAddressBook
+JsonSerializableAddressBook --> "*" JsonAdaptedclient
+JsonAdaptedclient --> "*" JsonAdaptedTag
 
 JsonSellerAddressBookStorage .up.|> SellerAddressBookStorage
 JsonSellerAddressBookStorage ..> JsonSerializableSellerAddressBook

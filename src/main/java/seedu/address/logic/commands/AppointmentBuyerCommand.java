@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BUYERS;
 
 import java.util.List;
@@ -15,17 +14,13 @@ import seedu.address.model.client.Appointment;
 
 public class AppointmentBuyerCommand extends Command {
     public static final String COMMAND_WORD = "appt-b";
-    public static final String MESSAGE_EMPTY_INPUT_DATE = "Please enter the date and time in the form of \n"
-            + "'yyyy-MM-dd-HH-mm'";
+    public static final String MESSAGE_EMPTY_INPUT_DATE = "Please enter the date following the Buyer index\n"
+            + " in the form of 'yyyy-MM-dd-HH-mm'";
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "You have made an appointment with Buyer: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "You have removed an appointment with Buyer: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Makes an appointment with a buyer\n"
-            + "Parameters: INDEX " + PREFIX_APPOINTMENT
-            + "TIME\n"
-            + "Must include: INDEX time/ \n"
-            + "The appointment time should be specified to minutes "
-            + "with the format 'yyyy-MM-dd-HH-mm.'\n"
+            + ": The appointment time should be specified to minutes\n"
+            + "with the format 'yyyy-MM-dd-HH-mm'\n"
             + "Example:  " + COMMAND_WORD + " 1 "
             + "time/ 2022-05-04-14-00";
     public static final String MESSAGE_TIME_IN_PAST = "The time you entered is in the past\n"
